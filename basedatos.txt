@@ -1,0 +1,71 @@
+create database Compania_1;
+use Compania_1;
+create table PROVEEDOR(
+IDPR int not null,
+NombrePR varchar(5) not null,
+TelefonoPR int not null,
+EstadoPR char(5) not null);
+
+alter table PROVEEDOR add column Temp int not null first;
+alter table PROVEEDOR add column Temp2 char(5) not null after temp;
+
+alter table PROVEEDOR add constraint PKPROVEEDOR primary key (IDPR);
+alter table PROVEEDOR drop primary key;
+alter table PROVEEDOR add constraint PKPROVEEDOR primary key (IDPR);
+
+alter table PROVEEDOR drop column Temp;
+alter table PROVEEDOR drop column Temp2;
+
+create table PARTE(
+IDPT char(5) not null,
+NombrePT varchar(20) not null,
+MaterialPT char(15) not null,
+CiudadPT char(15) not null,
+PesoPT varchar(7) not null
+);
+
+alter table PARTE add constraint PKPARTE primary key (IDPT);
+
+create table PROVEEDOR_PARTE(
+	IDPR int not null,
+	NombrePR varchar(5) not null,
+	IDPT char(5) not null,
+	NombrePT varchar(20) not null,
+	MaterialPT char(15) not null,
+	Stock int not null
+);
+
+alter table PROVEEDOR_PARTE add constraint PKPROVPARTE primary key(IDPR, IDPT);
+
+alter table PROVEEDOR drop column NombrePR;
+alter table PROVEEDOR add column NombrePR char(15) after IDPR;
+alter table PROVEEDOR drop column TelefonoPR;
+alter table PROVEEDOR add column CiudadPR varchar(15) after NombrePR;
+alter table PROVEEDOR drop column EstadoPR;
+alter table PROVEEDOR add column EstadoPR int after CiudadPR;
+
+alter table PARTE drop primary key;
+alter table PARTE drop column IDPT;
+alter table PARTE add column IDPT int first;
+alter table PARTE add constraint PKPARTE primary key (IDPT);
+alter table PARTE drop column NombrePT;
+alter table PARTE add column NombrePT char(15) after IDPT;
+alter table PARTE add column ColorPT varchar(12) after NombrePT;
+alter table PARTE drop column MaterialPT;
+alter table PARTE drop column PesoPT;
+alter table PARTE add column PesoPT int after ColorPT;
+alter table PARTE drop column CiudadPT;
+alter table PARTE add column CiudadPT varchar(15);
+
+alter table PROVEEDOR_PARTE drop column NombrePR;
+alter table PROVEEDOR_PARTE drop column NombrePT;
+alter table PROVEEDOR_PARTE drop column MaterialPT;
+alter table PROVEEDOR_PARTE drop primary key;
+alter table PROVEEDOR_PARTE drop column IDPT;
+alter table PROVEEDOR_PARTE add column IDPT int after IDPR;
+alter table PROVEEDOR_PARTE add constraint PKPRVPARTE primary key(IDPR, IDPT);
+
+show tables;
+show columns from PARTE;
+show columns from PROVEEDOR;
+show columns from PROVEEDOR_PARTE;
